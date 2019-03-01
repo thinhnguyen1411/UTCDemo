@@ -31,15 +31,15 @@ async loadPOListData()
 {
   this.showSpinner();
   let sapData = `<soapenv:Envelope xmlns:soapenv="http://www.w3.org/2003/05/soap-envelope" xmlns:urn="urn:sap-com:document:sap:soap:functions:mc-style"> <soapenv:Header/> <soapenv:Body> <urn:ZmobilePoHeader> <PurchaseHeader> <item> <Sno></Sno> <Ebeln></Ebeln> <Aedat></Aedat> <Utime></Utime> <Netwr></Netwr> <Status></Status> </item> </PurchaseHeader> <Username>${this.global.loginUser}</Username> </urn:ZmobilePoHeader> </soapenv:Body></soapenv:Envelope>`;
-  alert("Login User: " + this.global.loginUser);
-  alert("Request Data: " + sapData);
+ this.presentAlert("Login User: " + this.global.loginUser);
+ this.presentAlert("Request Data: " + sapData);
   
   var returnData = await this.api2.makePostSoapRequest('poheader/1.0/', sapData);
   let retDataStr= returnData as string;
-  alert("Response Data: " + retDataStr);
+ this.presentAlert("Response Data: " + retDataStr);
   if(retDataStr=="")
   {
-    alert("Request error !");
+   this.presentAlert("Request error !");
     return;
   }
   else
@@ -56,7 +56,7 @@ async loadPOListData()
         var StatusStr = listPOs[0].childNodes[5].textContent as string;
         if(StatusStr == "")
         {
-          alert("The logged in user doesn't have any PO yet !");
+         this.presentAlert("The logged in user doesn't have any PO yet !");
           return;
         }
       }
@@ -68,7 +68,7 @@ async loadPOListData()
         i++;
         return;
       }
-      // alert("for begin");
+      //this.presentAlert("for begin");
       var Sno = poObj.childNodes[0].textContent as string;
       // alert(Sno);
       var Ebeln = poObj.childNodes[1].textContent as string;

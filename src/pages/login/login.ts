@@ -85,32 +85,32 @@ export class LoginPage {
     // this.api.post('', xmlData,reqOpts).subscribe(data => {
     //   let strData = JSON.stringify(data);
     //   console.log(strData);
-    //   alert("Login SUCCESS!" + strData);
+    //  this.presentAlert("Login SUCCESS!" + strData);
     //   this.navCtrl.push(MainPage);
     // }, error => {
     //   let strErr = JSON.stringify(error);
     //   console.log(strErr);
     //   this.navCtrl.push(MainPage);
-    //   alert("Login Error:" + strErr);
+    //  this.presentAlert("Login Error:" + strErr);
     // });
     var returnData = await this.api2.makePostSoapRequest('saplogon/1.0/', sapData);
     let retStr = returnData as string;
-    // alert("retStr: "+ retStr);
+    //this.presentAlert("retStr: "+ retStr);
     if(retStr=="")
     {
-      alert("Request error !");
+     this.presentAlert("Request error !");
       return;
     }
     else
     {
       let parser = new DOMParser();
       let doc = parser.parseFromString(retStr, "application/xml");
-      //  alert("Doc: "+ doc.textContent);
+      // this.presentAlert("Doc: "+ doc.textContent);
       // var rsStr =doc.getElementsByTagName("env:Envelope")[0].getElementsByTagName("env:Body")[0] as HTMLElement;
       var typeEle = doc.getElementsByTagName("Message")[0].getElementsByTagName("Type")[0].textContent as string;
       if(typeEle == null || typeEle.toUpperCase() == "E")
       {
-        alert("User or password is incorrect !");
+       this.presentAlert("User or password is incorrect !");
         this.hideSpinner();
       }
       else
@@ -123,7 +123,7 @@ export class LoginPage {
 
   // loginResp(result)
   // {
-  // //  alert("Login SUCCESS!" + result.responseText);
+  // // this.presentAlert("Login SUCCESS!" + result.responseText);
   //   this.navCtrl.push(MainPage);
   // }
 
