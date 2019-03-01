@@ -25,7 +25,7 @@ export class ItemDetailPage {
     this.poHeader = this.selectedPO.Ebeln;
     this.loading = this.loadingCtrl.create({
       content: 'Please wait...',
-      dismissOnPageChange: true
+      dismissOnPageChange: false
     });
     this.loadPOItemData();
   }
@@ -94,6 +94,7 @@ export class ItemDetailPage {
         this.allItems.push(item);
       }.bind(this));
       this.currentItems = this.allItems;
+      this.hideSpinner();
     }
   }
 
@@ -102,7 +103,11 @@ export class ItemDetailPage {
   }
 
   public hideSpinner() {
-  	this.loading.dismiss();
+    this.loading.dismiss();
+    this.loading = this.loadingCtrl.create({
+      content: 'Please wait...',
+      dismissOnPageChange: false
+    });
   }
 
   presentAlert(info) {

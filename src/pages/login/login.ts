@@ -44,7 +44,7 @@ export class LoginPage {
     });
     this.loading = this.loadingCtrl.create({
       content: 'Please wait...',
-      dismissOnPageChange: true
+      dismissOnPageChange: false
     });
   }
 
@@ -108,6 +108,7 @@ export class LoginPage {
       // this.presentAlert("Doc: "+ doc.textContent);
       // var rsStr =doc.getElementsByTagName("env:Envelope")[0].getElementsByTagName("env:Body")[0] as HTMLElement;
       var typeEle = doc.getElementsByTagName("Message")[0].getElementsByTagName("Type")[0].textContent as string;
+      this.hideSpinner();
       if(typeEle == null || typeEle.toUpperCase() == "E")
       {
        this.presentAlert("User or password is incorrect !");
@@ -135,7 +136,7 @@ export class LoginPage {
     this.loading.dismiss();
     this.loading = this.loadingCtrl.create({
       content: 'Please wait...',
-      dismissOnPageChange: true
+      dismissOnPageChange: false
     });
   }
 

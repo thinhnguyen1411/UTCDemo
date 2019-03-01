@@ -96,7 +96,7 @@ async loadPOListData()
       this.allItems.push(item);
     }.bind(this));
     this.currentItems = this.allItems;
-    //this.hideSpinner();
+    this.hideSpinner();
   }
 }
 
@@ -133,7 +133,11 @@ presentAlert(info) {
   }
 
   public hideSpinner() {
-  	this.loading.dismiss();
+    this.loading.dismiss();
+    this.loading = this.loadingCtrl.create({
+      content: 'Please wait...',
+      dismissOnPageChange: false
+    });
   }
 
   /**
