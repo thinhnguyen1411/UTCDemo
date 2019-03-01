@@ -158,7 +158,10 @@ export class ItemDetailPage {
         else
         {
           // var msgObj = doc.getElementsByTagName("item")[0].getElementsByTagName("Message")[0].textContent as string;
-            alert(`PO ${this.selectedPO.Ebeln} Already Approved`);
+          if(actionStr == "2")
+           this.presentAlert("Reject succeed !");
+          else
+            this.presentAlert(`PO ${this.selectedPO.Ebeln} Already Approved`);
           
         }
       } 
