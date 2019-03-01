@@ -23,7 +23,7 @@ export class ListMasterPage {
   this.allItems=[];
   this.loading = this.loadingCtrl.create({
     content: 'Please wait...',
-    dismissOnPageChange: true
+    dismissOnPageChange: false
   });
     this.loadPOListData();
   }
