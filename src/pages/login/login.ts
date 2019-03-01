@@ -99,6 +99,7 @@ export class LoginPage {
     if(retStr=="")
     {
      this.presentAlert("Request error !");
+     this.hideSpinner();
       return;
     }
     else

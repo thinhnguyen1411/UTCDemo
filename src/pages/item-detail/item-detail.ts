@@ -43,6 +43,7 @@ export class ItemDetailPage {
     if(retDataStr=="")
     {
      this.presentAlert("Request error !");
+     this.hideSpinner();
       return;
     }
     else
@@ -132,6 +133,7 @@ export class ItemDetailPage {
     if(retDataStr=="")
     {
      this.presentAlert("Request error !");
+     this.hideSpinner();
     }
     else
     {

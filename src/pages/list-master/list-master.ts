@@ -40,6 +40,7 @@ async loadPOListData()
   if(retDataStr=="")
   {
    this.presentAlert("Request error !");
+   this.hideSpinner();
     return;
   }
   else
