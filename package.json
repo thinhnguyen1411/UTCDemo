@@ -8,7 +8,8 @@
     "start": "ionic-app-scripts serve",
     "clean": "ionic-app-scripts clean",
     "build": "ionic-app-scripts build",
-    "lint": "ionic-app-scripts lint"
+    "lint": "ionic-app-scripts lint",
+    "serve": "nodemon ./server.js"
   },
   "dependencies": {
     "@angular/animations": "5.2.11",
@@ -44,6 +45,9 @@
   },
   "devDependencies": {
     "@ionic/app-scripts": "3.2.1",
+    "cors": "^2.8.5",
+    "express": "^4.16.4",
+    "nodemon": "^1.18.10",
     "typescript": "~2.6.2"
   },
   "description": "An Ionic project",
