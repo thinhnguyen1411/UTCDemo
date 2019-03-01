@@ -17,10 +17,14 @@ export class ListMasterPage {
   allItems: Item[]=[];
   constructor(public navCtrl: NavController, public items: Items, public loadingCtrl: LoadingController, public modalCtrl: ModalController,public api2: HttpServiceProvider,public alertController: AlertController,public global: GlobalProvider) {
       //this.currentItems = this.items.query();
-    this.loading = this.loadingCtrl.create({
-      content: 'Please wait...',
-      dismissOnPageChange: true
-    });
+  }
+  ionViewWillEnter() {
+    this.currentItems=[];
+  this.allItems=[];
+  this.loading = this.loadingCtrl.create({
+    content: 'Please wait...',
+    dismissOnPageChange: true
+  });
     this.loadPOListData();
   }
 async loadPOListData()
