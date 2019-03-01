@@ -25,6 +25,7 @@ export class ListMasterPage {
   }
   ionViewWillEnter() {
     this.currentItems = [];
+    this.page = 1;
     this.allItems = [];
     this.loading = this.loadingCtrl.create({
       content: 'Please wait...',
