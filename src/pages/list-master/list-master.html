@@ -12,12 +12,12 @@
   
   </ion-header>
   <ion-content>
-    <ion-select multiple="false" #MySelect (ionChange)="onChange($event)">
+    <!-- <ion-select multiple="false" #MySelect (ionChange)="onChange($event)">
         <ion-option value="All" selected>All Status</ion-option>
         <ion-option value="pending">Pending</ion-option>
         <ion-option value="rejected">Rejected</ion-option>
         <ion-option value="approved">Approved</ion-option>
-    </ion-select>
+    </ion-select> -->
     <ion-list class="po-list-md">
       <ion-item-sliding *ngFor="let item of currentItems">
         <button ion-item (click)="openItem(item)">

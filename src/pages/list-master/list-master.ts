@@ -75,15 +75,17 @@ async loadPOListData()
       // alert(Utime);
       var Netwr = poObj.childNodes[4].textContent as string;
       // alert(Netwr);
-      var StatusStr = poObj.childNodes[5].textContent as string;
+      var Status = poObj.childNodes[5].textContent as string;
       // alert(StatusStr);
+      if(Status!="P")
+        return;
       var itemJson ={
         "Sno": Sno,
         "Ebeln": Ebeln,
         "Aedat": Aedat,
         "Utime": Utime,
         "Netwr": Netwr,
-        "Status": StatusStr,
+        "Status": Status,
       };
 
       var item = new Item(itemJson);
