@@ -1,0 +1,1 @@
+<env:Envelope xmlns:env="http://www.w3.org/2003/05/soap-envelope"><env:Header/><env:Body><n0:ZsusrCheckLogonDataResponse xmlns:n0="urn:sap-com:document:sap:soap:functions:mc-style"><AllowPwdDeletion/><Message><Type/><Message/></Message><PwdChangeSso>1</PwdChangeSso><Pwdstate>0</Pwdstate><Ticket/><UserId>GUNDAA</UserId></n0:ZsusrCheckLogonDataResponse></env:Body></env:Envelope>
