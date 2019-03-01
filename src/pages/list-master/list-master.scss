@@ -1,3 +1,43 @@
 page-list-master {
+    .header .col {
+        background-color:lightgrey;
+        padding-left: 15px;
+    }
+    
+    .col {
+        // border: solid 1px grey;
+        border-bottom-style: none;
+        border-right-style: none;
+        width: 1/7;
+    }
+    .firstcol {
+        width: 10px;
+    }
+    .row{
+        font-size: 5pt;
+    }
+    .gridrow
+    {
+        border-bottom:0.5px;
+        border-bottom-style: solid;
+    }
+    .gridheader
+    {
+        font-weight: bold;
+        background-color: cornflowerblue;
+        color: white;
+    }
+    // .col:last-child {
+    //     border-right: solid 1px grey;
+    // }
+    
+    // .row:last-child .col {
+    //     border-bottom: solid 1px grey;
+    // }
 
+    .item-title{
+        color: #0991c6;
+        padding: 0 0 10px;
+        font-size: 2rem;
+    }
 }
