@@ -43,6 +43,7 @@ export class ListMasterPage {
     this.presentAlert("Response Data: " + retDataStr);
     if (retDataStr == "") {
       this.presentAlert("Request error !");
+      this.hideSpinner();
       return;
     }
     else {
@@ -59,44 +60,44 @@ export class ListMasterPage {
             return;
           }
         }
+        var i = 0;
+        listPOs.forEach(function (poObj) {
+          if (i == 0) {
+            i++;
+            return;
+          }
+          //this.presentAlert("for begin");
+          var Sno = poObj.childNodes[0].textContent as string;
+          // alert(Sno);
+          var Ebeln = poObj.childNodes[1].textContent as string;
+          // alert(Ebeln);
+          var Aedat = poObj.childNodes[2].textContent as string;
+          // alert(Aedat);
+          var Utime = poObj.childNodes[3].textContent as string;
+          // alert(Utime);
+          var Netwr = poObj.childNodes[4].textContent as string;
+          // alert(Netwr);
+          var Status = poObj.childNodes[5].textContent as string;
+          // alert(StatusStr);
+          if (Status != "P")
+            return;
+          var itemJson = {
+            "Sno": Sno,
+            "Ebeln": Ebeln,
+            "Aedat": Aedat,
+            "Utime": Utime,
+            "Netwr": Netwr,
+            "Status": Status,
+          };
+
+          var item = new Item(itemJson);
+          this.allItems.push(item);
+        }.bind(this));
+        this.itemsPerPage = this.global.getPaginatedItems(this.allItems, this.page, this.pageSize);
+        this.currentItems = _.concat(this.currentItems, this.itemsPerPage.data);
+
+        this.hideSpinner();
       }
-      var i = 0;
-      listPOs.forEach(function (poObj) {
-        if (i == 0) {
-          i++;
-          return;
-        }
-        //this.presentAlert("for begin");
-        var Sno = poObj.childNodes[0].textContent as string;
-        // alert(Sno);
-        var Ebeln = poObj.childNodes[1].textContent as string;
-        // alert(Ebeln);
-        var Aedat = poObj.childNodes[2].textContent as string;
-        // alert(Aedat);
-        var Utime = poObj.childNodes[3].textContent as string;
-        // alert(Utime);
-        var Netwr = poObj.childNodes[4].textContent as string;
-        // alert(Netwr);
-        var Status = poObj.childNodes[5].textContent as string;
-        // alert(StatusStr);
-        if (Status != "P")
-          return;
-        var itemJson = {
-          "Sno": Sno,
-          "Ebeln": Ebeln,
-          "Aedat": Aedat,
-          "Utime": Utime,
-          "Netwr": Netwr,
-          "Status": Status,
-        };
-
-        var item = new Item(itemJson);
-        this.allItems.push(item);
-      }.bind(this));
-      this.itemsPerPage = this.global.getPaginatedItems(this.allItems, this.page, this.pageSize);
-      this.currentItems = _.concat(this.currentItems, this.itemsPerPage.data);
-
-      this.hideSpinner();
     }
   }
 
@@ -116,12 +117,12 @@ export class ListMasterPage {
   }
 
   presentAlert(info) {
-    // let alert = this.alertController.create({
-    //   title: 'Alert',
-    //   subTitle: info,
-    //   buttons: ['OK']
-    // });
-    // alert.present();
+    let alert = this.alertController.create({
+      title: 'Alert',
+      subTitle: info,
+      buttons: ['OK']
+    });
+    alert.present();
   }
   /**
    * The view loaded, let's query our items for the list

@@ -43,6 +43,7 @@ export class ItemDetailPage {
     if(retDataStr=="")
     {
      this.presentAlert("Request error !");
+     this.hideSpinner();
       return;
     }
     else
@@ -132,6 +133,7 @@ export class ItemDetailPage {
     if(retDataStr=="")
     {
      this.presentAlert("Request error !");
+     this.hideSpinner();
     }
     else
     {
@@ -158,7 +160,10 @@ export class ItemDetailPage {
         else
         {
           // var msgObj = doc.getElementsByTagName("item")[0].getElementsByTagName("Message")[0].textContent as string;
-            alert(`PO ${this.selectedPO.Ebeln} Already Approved`);
+          if(actionStr == "2")
+           this.presentAlert("Reject succeed !");
+          else
+            this.presentAlert(`PO ${this.selectedPO.Ebeln} Already Approved`);
           
         }
       } 
