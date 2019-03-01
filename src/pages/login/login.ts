@@ -109,7 +109,10 @@ export class LoginPage {
       // var rsStr =doc.getElementsByTagName("env:Envelope")[0].getElementsByTagName("env:Body")[0] as HTMLElement;
       var typeEle = doc.getElementsByTagName("Message")[0].getElementsByTagName("Type")[0].textContent as string;
       if(typeEle == null || typeEle.toUpperCase() == "E")
+      {
         alert("User or password is incorrect !");
+        this.hideSpinner();
+      }
       else
       {
         this.global.loginUser = this.account.email;
@@ -129,7 +132,11 @@ export class LoginPage {
   }
 
   public hideSpinner() {
-  	this.loading.dismiss();
+    this.loading.dismiss();
+    this.loading = this.loadingCtrl.create({
+      content: 'Please wait...',
+      dismissOnPageChange: true
+    });
   }
 
   presentAlert(info) {
