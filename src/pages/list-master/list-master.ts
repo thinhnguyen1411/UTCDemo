@@ -6,108 +6,123 @@ import { Items } from '../../providers';
 import { AlertController } from 'ionic-angular';
 import { GlobalProvider } from "../../providers/global/global";
 import { LoadingController } from 'ionic-angular';
+import * as _ from 'lodash';
 @IonicPage()
 @Component({
   selector: 'page-list-master',
   templateUrl: 'list-master.html'
 })
 export class ListMasterPage {
+  page = 1;
+  pageSize = 10;
+  itemsPerPage;
+
   loading;
-  currentItems: Item[]=[];
-  allItems: Item[]=[];
-  constructor(public navCtrl: NavController, public items: Items, public loadingCtrl: LoadingController, public modalCtrl: ModalController,public api2: HttpServiceProvider,public alertController: AlertController,public global: GlobalProvider) {
-      //this.currentItems = this.items.query();
+  currentItems: Item[] = [];
+  allItems: Item[] = [];
+  constructor(public navCtrl: NavController, public items: Items, public loadingCtrl: LoadingController, public modalCtrl: ModalController, public api2: HttpServiceProvider, public alertController: AlertController, public global: GlobalProvider) {
+    //this.currentItems = this.items.query();
   }
   ionViewWillEnter() {
-    this.currentItems=[];
-  this.allItems=[];
-  this.loading = this.loadingCtrl.create({
-    content: 'Please wait...',
-    dismissOnPageChange: false
-  });
+    this.currentItems = [];
+    this.allItems = [];
+    this.loading = this.loadingCtrl.create({
+      content: 'Please wait...',
+      dismissOnPageChange: false
+    });
     this.loadPOListData();
   }
-async loadPOListData()
-{
-  this.showSpinner();
-  let sapData = `<soapenv:Envelope xmlns:soapenv="http://www.w3.org/2003/05/soap-envelope" xmlns:urn="urn:sap-com:document:sap:soap:functions:mc-style"> <soapenv:Header/> <soapenv:Body> <urn:ZmobilePoHeader> <PurchaseHeader> <item> <Sno></Sno> <Ebeln></Ebeln> <Aedat></Aedat> <Utime></Utime> <Netwr></Netwr> <Status></Status> </item> </PurchaseHeader> <Username>${this.global.loginUser}</Username> </urn:ZmobilePoHeader> </soapenv:Body></soapenv:Envelope>`;
- this.presentAlert("Login User: " + this.global.loginUser);
- this.presentAlert("Request Data: " + sapData);
-  
-  var returnData = await this.api2.makePostSoapRequest('poheader/1.0/', sapData);
-  let retDataStr= returnData as string;
- this.presentAlert("Response Data: " + retDataStr);
-  if(retDataStr=="")
-  {
-   this.presentAlert("Request error !");
-    return;
-  }
-  else
-  {
-    let parser = new DOMParser();
-    let doc = parser.parseFromString(retDataStr, "application/xml");
-    // var rsObj=doc.getElementsByTagName("env:Envelope")[0].getElementsByTagName("env:Body")[0] as HTMLElement;
-    var listPOs = Array.from(doc.getElementsByTagName("PurchaseHeader")[0].childNodes);
-    // var listPOCount = doc.getElementsByTagName("PurchaseHeader")[0].childNodes.length;
-    if(listPOs.length == 1)
-    {
-      if(listPOs[0].childNodes[5] != null)
-      {
-        var StatusStr = listPOs[0].childNodes[5].textContent as string;
-        if(StatusStr == "")
-        {
-         this.presentAlert("The logged in user doesn't have any PO yet !");
-          return;
+  async loadPOListData() {
+    this.showSpinner();
+    let sapData = `<soapenv:Envelope xmlns:soapenv="http://www.w3.org/2003/05/soap-envelope" xmlns:urn="urn:sap-com:document:sap:soap:functions:mc-style"> <soapenv:Header/> <soapenv:Body> <urn:ZmobilePoHeader> <PurchaseHeader> <item> <Sno></Sno> <Ebeln></Ebeln> <Aedat></Aedat> <Utime></Utime> <Netwr></Netwr> <Status></Status> </item> </PurchaseHeader> <Username>${this.global.loginUser}</Username> </urn:ZmobilePoHeader> </soapenv:Body></soapenv:Envelope>`;
+    this.presentAlert("Login User: " + this.global.loginUser);
+    this.presentAlert("Request Data: " + sapData);
+
+    var returnData = await this.api2.makePostSoapRequest('poheader/1.0/', sapData);
+    let retDataStr = returnData as string;
+    this.presentAlert("Response Data: " + retDataStr);
+    if (retDataStr == "") {
+      this.presentAlert("Request error !");
+      return;
+    }
+    else {
+      let parser = new DOMParser();
+      let doc = parser.parseFromString(retDataStr, "application/xml");
+      // var rsObj=doc.getElementsByTagName("env:Envelope")[0].getElementsByTagName("env:Body")[0] as HTMLElement;
+      var listPOs = Array.from(doc.getElementsByTagName("PurchaseHeader")[0].childNodes);
+      // var listPOCount = doc.getElementsByTagName("PurchaseHeader")[0].childNodes.length;
+      if (listPOs.length == 1) {
+        if (listPOs[0].childNodes[5] != null) {
+          var StatusStr = listPOs[0].childNodes[5].textContent as string;
+          if (StatusStr == "") {
+            this.presentAlert("The logged in user doesn't have any PO yet !");
+            return;
+          }
         }
       }
+      var i = 0;
+      listPOs.forEach(function (poObj) {
+        if (i == 0) {
+          i++;
+          return;
+        }
+        //this.presentAlert("for begin");
+        var Sno = poObj.childNodes[0].textContent as string;
+        // alert(Sno);
+        var Ebeln = poObj.childNodes[1].textContent as string;
+        // alert(Ebeln);
+        var Aedat = poObj.childNodes[2].textContent as string;
+        // alert(Aedat);
+        var Utime = poObj.childNodes[3].textContent as string;
+        // alert(Utime);
+        var Netwr = poObj.childNodes[4].textContent as string;
+        // alert(Netwr);
+        var Status = poObj.childNodes[5].textContent as string;
+        // alert(StatusStr);
+        if (Status != "P")
+          return;
+        var itemJson = {
+          "Sno": Sno,
+          "Ebeln": Ebeln,
+          "Aedat": Aedat,
+          "Utime": Utime,
+          "Netwr": Netwr,
+          "Status": Status,
+        };
+
+        var item = new Item(itemJson);
+        this.allItems.push(item);
+      }.bind(this));
+      this.itemsPerPage = this.global.getPaginatedItems(this.allItems, this.page, this.pageSize);
+      this.currentItems = _.concat(this.currentItems, this.itemsPerPage.data);
+
+      this.hideSpinner();
     }
-    var i=0;
-    listPOs.forEach(function (poObj) {
-      if(i==0)
-      {
-        i++;
-        return;
-      }
-      //this.presentAlert("for begin");
-      var Sno = poObj.childNodes[0].textContent as string;
-      // alert(Sno);
-      var Ebeln = poObj.childNodes[1].textContent as string;
-      // alert(Ebeln);
-      var Aedat = poObj.childNodes[2].textContent as string;
-      // alert(Aedat);
-      var Utime = poObj.childNodes[3].textContent as string;
-      // alert(Utime);
-      var Netwr = poObj.childNodes[4].textContent as string;
-      // alert(Netwr);
-      var Status = poObj.childNodes[5].textContent as string;
-      // alert(StatusStr);
-      if(Status!="P")
-        return;
-      var itemJson ={
-        "Sno": Sno,
-        "Ebeln": Ebeln,
-        "Aedat": Aedat,
-        "Utime": Utime,
-        "Netwr": Netwr,
-        "Status": Status,
-      };
-
-      var item = new Item(itemJson);
-      this.allItems.push(item);
-    }.bind(this));
-    this.currentItems = this.allItems;
-    this.hideSpinner();
   }
-}
 
-presentAlert(info) {
-  let alert = this.alertController.create({
-    title: 'Alert',
-    subTitle: info,
-    buttons: ['OK']
-  });
-  alert.present();
-}
+  doInfinite(infiniteScroll) {
+    console.log('Begin async operation');
+
+    setTimeout(() => {
+      if (this.page < this.itemsPerPage.total_pages) {
+        this.page = this.page + 1;
+        this.itemsPerPage = this.global.getPaginatedItems(this.allItems, this.page, this.pageSize);
+        this.currentItems = _.concat(this.currentItems, this.itemsPerPage.data);
+      }
+
+      console.log('Async operation has ended');
+      infiniteScroll.complete();
+    }, 500);
+  }
+
+  presentAlert(info) {
+    // let alert = this.alertController.create({
+    //   title: 'Alert',
+    //   subTitle: info,
+    //   buttons: ['OK']
+    // });
+    // alert.present();
+  }
   /**
    * The view loaded, let's query our items for the list
    */
@@ -152,13 +167,13 @@ presentAlert(info) {
    */
 
   onChange(value) {
-    if (value == "All") 
+    if (value == "All")
       this.currentItems = this.allItems;
-    else if(value =="rejected")
+    else if (value == "rejected")
       this.currentItems = this.allItems.filter(item => item.Status == "R");
-    else if(value =="approved")
+    else if (value == "approved")
       this.currentItems = this.allItems.filter(item => item.Status == "A");
-    else if(value =="pending")
+    else if (value == "pending")
       this.currentItems = this.allItems.filter(item => item.Status == "P");
   }
 

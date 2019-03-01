@@ -1,46 +1,48 @@
+<!-- -->
 <ion-header>
-
-    <ion-navbar>
-      <ion-title>{{ 'LIST_MASTER_TITLE' | translate }}</ion-title>
-  
-      <!-- <ion-buttons end>
-        <button ion-button icon-only (click)="addItem()">
-          <ion-icon name="add"></ion-icon>
-        </button>
-      </ion-buttons> -->
-    </ion-navbar>
-  
-  </ion-header>
-  <ion-content>
-    <!-- <ion-select multiple="false" #MySelect (ionChange)="onChange($event)">
+  <ion-navbar color="primary">
+    <!-- <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button> -->
+    <ion-title>
+      {{ 'LIST_MASTER_TITLE' | translate }}
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content padding class="animated fadeIn common-bg">
+  <!-- <ion-select multiple="false" #MySelect (ionChange)="onChange($event)">
         <ion-option value="All" selected>All Status</ion-option>
         <ion-option value="pending">Pending</ion-option>
         <ion-option value="rejected">Rejected</ion-option>
         <ion-option value="approved">Approved</ion-option>
     </ion-select> -->
-    <ion-list class="po-list-md">
-      <ion-item-sliding *ngFor="let item of currentItems">
-        <button ion-item (click)="openItem(item)">
-            <!-- <ion-avatar item-start>
+  <ion-list class="po-list-md">
+    <ion-item-sliding *ngFor="let item of currentItems">
+      <button ion-item (click)="openItem(item)">
+        <!-- <ion-avatar item-start>
               <img [src]="item.profilePic" />
             </ion-avatar> -->
-            <h2 class="item-title"><strong>{{item.Ebeln}}</strong></h2>
-            <p><strong>Created Date: </strong>{{item.Aedat}}</p>
-            <p><strong>Created time: </strong>{{item.Utime}}</p>
-            <p><strong>Net value: </strong>{{item.Netwr}}</p>
-            <p><strong>Current status: </strong>{{item.Status}}</p>
-          <!-- <p>
+        <h2 class="item-title"><strong>{{item.Ebeln}}</strong></h2>
+        <p><strong>Created Date: </strong>{{item.Aedat}}</p>
+        <p><strong>Created time: </strong>{{item.Utime}}</p>
+        <p><strong>Net value: </strong>{{item.Netwr}}</p>
+        <p><strong>Current status: </strong>{{item.Status}}</p>
+        <!-- <p>
                 <ion-icon name="checkmark-circle-outline"></ion-icon>
                 <ion-icon name="close"></ion-icon>
           </p> -->
-          <!-- <ion-note item-end *ngIf="item.note">{{item.note}}</ion-note> -->
+        <!-- <ion-note item-end *ngIf="item.note">{{item.note}}</ion-note> -->
+      </button>
+
+      <ion-item-options>
+        <button ion-button color="danger" (click)="deleteItem(item)">
+          {{ 'DELETE_BUTTON' | translate }}
         </button>
-  
-        <ion-item-options>
-          <button ion-button color="danger" (click)="deleteItem(item)">
-            {{ 'DELETE_BUTTON' | translate }}
-          </button>
-        </ion-item-options>
-      </ion-item-sliding>
-    </ion-list>
-  </ion-content>
+      </ion-item-options>
+    </ion-item-sliding>
+  </ion-list>
+
+  <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
+    <ion-infinite-scroll-content></ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+</ion-content>
