@@ -141,7 +141,10 @@ export class ItemDetailPage {
         if(statusTxt != "")
         {
           if(actionStr == "1")
+          {
+            this.isApproved = true;
             alert("Approve succeed !");
+          }
           else if(actionStr == "2")
             alert("Reject succeed !");
           else
