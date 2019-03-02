@@ -8,6 +8,8 @@ import { HttpServiceProvider } from '../../providers/api/soap-service';
 import { Api } from '../../providers';
 import { Http, Headers, RequestOptions } from '@angular/http';
 import { LoadingController } from 'ionic-angular';
+import { GlobalProvider } from "../../providers/global/global";
+import * as _ from 'lodash';
 @IonicPage()
 @Component({
   selector: 'page-item-detail',
@@ -20,7 +22,11 @@ export class ItemDetailPage {
   allItems: Item[]=[];
   poHeader: any;
   isApproved: boolean = false;
-  constructor(public navCtrl: NavController, navParams: NavParams, public loadingCtrl: LoadingController, public items: Items,public api2: HttpServiceProvider, public modalCtrl: ModalController,public alertController: AlertController,public api: Api) {
+  page = 1;
+  pageSize = 10;
+  itemsPerPage;
+
+  constructor(public navCtrl: NavController, navParams: NavParams, public loadingCtrl: LoadingController, public items: Items,public api2: HttpServiceProvider, public modalCtrl: ModalController,public alertController: AlertController,public api: Api, public global: GlobalProvider) {
     this.selectedPO = navParams.get('item') || items.defaultItem;
     this.poHeader = this.selectedPO.Ebeln;
     this.loading = this.loadingCtrl.create({
@@ -94,9 +100,30 @@ export class ItemDetailPage {
         var item = new Item(itemJson);
         this.allItems.push(item);
       }.bind(this));
-      this.currentItems = this.allItems;
+      this.itemsPerPage = this.global.getPaginatedItems(this.allItems, this.page, this.pageSize);
+      this.currentItems = _.concat(this.currentItems, this.itemsPerPage.data);
+
       this.hideSpinner();
     }
+  }
+
+  ionViewWillEnter() {
+    this.page = 1;
+  }
+
+  doInfinite(infiniteScroll) {
+    console.log('Begin async operation');
+
+    setTimeout(() => {
+      if (this.page < this.itemsPerPage.total_pages) {
+        this.page = this.page + 1;
+        this.itemsPerPage = this.global.getPaginatedItems(this.allItems, this.page, this.pageSize);
+        this.currentItems = _.concat(this.currentItems, this.itemsPerPage.data);
+      }
+
+      console.log('Async operation has ended');
+      infiniteScroll.complete();
+    }, 500);
   }
 
   public showSpinner() {
