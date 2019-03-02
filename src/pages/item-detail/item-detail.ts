@@ -42,10 +42,12 @@ export class ItemDetailPage {
     if(this.selectedPO.Status == "A")
       this.isApproved = true;
     let sapData = `<soapenv:Envelope xmlns:soapenv="http://www.w3.org/2003/05/soap-envelope" xmlns:urn="urn:sap-com:document:sap:soap:functions:mc-style"> <soapenv:Header/> <soapenv:Body> <urn:ZmobilePoItem> <Poitem> <item> <Ebeln></Ebeln> <Ebelp></Ebelp> <Knttp></Knttp> <Matnr></Matnr> <Maktg></Maktg> <Menge></Menge> <Meins></Meins> <Eindt></Eindt> <Netpr></Netpr> </item> </Poitem> <Ponumber>${this.selectedPO.Ebeln}</Ponumber> </urn:ZmobilePoItem> </soapenv:Body></soapenv:Envelope>`;
-   this.presentAlert("Request Data: " + sapData);
+    if(this.global.isDebug)
+      this.presentAlert("Request Data: " + sapData);
     var returnData = await this.api2.makePostSoapRequest('poitem/1.0/', sapData);
     let retDataStr= returnData as string;
-   this.presentAlert("Response Data: " + retDataStr);
+    if(this.global.isDebug)
+      this.presentAlert("Response Data: " + retDataStr);
     if(retDataStr=="")
     {
      this.presentAlert("Request error !");
@@ -153,10 +155,12 @@ export class ItemDetailPage {
     });
     this.showSpinner();
     let sapData = `<soapenv:Envelope xmlns:soapenv="http://www.w3.org/2003/05/soap-envelope" xmlns:urn="urn:sap-com:document:sap:soap:functions:mc-style"> <soapenv:Header/> <soapenv:Body> <urn:ZmobilePoReject> <Apprej>${actionStr}</Apprej> <Ponumber>${ponum}</Ponumber> <Return> <item> <Type></Type> <Code></Code> <Message></Message> <LogNo></LogNo> <LogMsgNo></LogMsgNo> <MessageV1></MessageV1> <MessageV2></MessageV2> <MessageV3></MessageV3> <MessageV4></MessageV4> </item> </Return> </urn:ZmobilePoReject> </soapenv:Body></soapenv:Envelope>`;
-   this.presentAlert("Request Data: " + sapData);
+    if(this.global.isDebug)
+      this.presentAlert("Request Data: " + sapData);
     var returnData = await this.api2.makePostSoapRequest('poapproval/1.0/', sapData);
     let retDataStr= returnData as string;
-   this.presentAlert("Response Data: " + retDataStr);
+    if(this.global.isDebug)
+      this.presentAlert("Response Data: " + retDataStr);
     if(retDataStr=="")
     {
      this.presentAlert("Request error !");

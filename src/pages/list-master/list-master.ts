@@ -36,12 +36,15 @@ export class ListMasterPage {
   async loadPOListData() {
     this.showSpinner();
     let sapData = `<soapenv:Envelope xmlns:soapenv="http://www.w3.org/2003/05/soap-envelope" xmlns:urn="urn:sap-com:document:sap:soap:functions:mc-style"> <soapenv:Header/> <soapenv:Body> <urn:ZmobilePoHeader> <PurchaseHeader> <item> <Sno></Sno> <Ebeln></Ebeln> <Aedat></Aedat> <Utime></Utime> <Netwr></Netwr> <Status></Status> </item> </PurchaseHeader> <Username>${this.global.loginUser}</Username> </urn:ZmobilePoHeader> </soapenv:Body></soapenv:Envelope>`;
-    this.presentAlert("Login User: " + this.global.loginUser);
-    this.presentAlert("Request Data: " + sapData);
-
+    if(this.global.isDebug)
+    {
+      this.presentAlert("Login User: " + this.global.loginUser);
+      this.presentAlert("Request Data: " + sapData);
+    }
     var returnData = await this.api2.makePostSoapRequest('poheader/1.0/', sapData);
     let retDataStr = returnData as string;
-    this.presentAlert("Response Data: " + retDataStr);
+    if(this.global.isDebug)
+      this.presentAlert("Response Data: " + retDataStr);
     if (retDataStr == "") {
       this.presentAlert("Request error !");
       this.hideSpinner();

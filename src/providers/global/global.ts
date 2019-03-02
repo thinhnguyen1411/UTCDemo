@@ -11,7 +11,7 @@ import * as _ from 'lodash';
 @Injectable()
 export class GlobalProvider {
   public loginUser: string;
-
+  public isDebug: boolean = false;
   constructor(public http: HttpClient) {
     console.log('Hello GlobalProvider Provider');
   }
