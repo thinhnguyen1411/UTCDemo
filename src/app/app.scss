@@ -324,7 +324,7 @@
           height: 80px;
           margin: 20px auto 0;
           border-radius: 10%;
-          background: url("../assets/img/sap_logo.png") no-repeat;
+          background: url("../assets/icon/utc_logo.png") no-repeat;
           background-size: 100%;
         }
 
@@ -544,4 +544,9 @@
 
   .fadeInDown {
     animation-name: fadeInDown;
+  }
+
+  ion-infinite-scroll-content
+  {
+    min-height: 0px;
   }
