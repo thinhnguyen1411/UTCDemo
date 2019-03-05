@@ -160,7 +160,7 @@ export class ItemDetailPage {
     //if(this.global.isDebug)
     {
       setTimeout(() => {
-        alert("Request Data: " + sapData);
+        alert("App Ver: "+this.global.buildNum +" Request Data: " + sapData);
       }, 1000);
       
     }
@@ -169,7 +169,7 @@ export class ItemDetailPage {
    // if(this.global.isDebug)
     {
       setTimeout(() => {
-        alert("Response Data: " + retDataStr);
+        alert("App Ver: "+this.global.buildNum +" Response Data: " + retDataStr);
       }, 1000);
     }
       
