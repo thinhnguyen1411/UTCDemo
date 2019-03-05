@@ -29,7 +29,10 @@ export class LoginPage {
   private navCtrler: NavController;
   // Our translated text strings
   private loginErrorString: string;
-
+  ionViewWillEnter() {
+    this.account.password = "";
+    this.account.email = "";
+  }
   constructor(public navCtrl: NavController,
     public user: User,
     public toastCtrl: ToastController,
