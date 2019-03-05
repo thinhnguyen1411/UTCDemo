@@ -34,7 +34,6 @@ export class ListMasterPage {
     this.loadPOListData();
   }
   async loadPOListData() {
-    this.showSpinner();
     let sapData = `<soapenv:Envelope xmlns:soapenv="http://www.w3.org/2003/05/soap-envelope" xmlns:urn="urn:sap-com:document:sap:soap:functions:mc-style"> <soapenv:Header/> <soapenv:Body> <urn:ZmobilePoHeader> <PurchaseHeader> <item> <Sno></Sno> <Ebeln></Ebeln> <Aedat></Aedat> <Utime></Utime> <Netwr></Netwr> <Status></Status> </item> </PurchaseHeader> <Username>${this.global.loginUser}</Username> </urn:ZmobilePoHeader> </soapenv:Body></soapenv:Envelope>`;
     if(this.global.isDebug)
     {
@@ -51,6 +50,7 @@ export class ListMasterPage {
       return;
     }
     else {
+      this.showSpinner();
       let parser = new DOMParser();
       let doc = parser.parseFromString(retDataStr, "application/xml");
       // var rsObj=doc.getElementsByTagName("env:Envelope")[0].getElementsByTagName("env:Body")[0] as HTMLElement;
@@ -60,6 +60,7 @@ export class ListMasterPage {
         if (listPOs[0].childNodes[5] != null) {
           var StatusStr = listPOs[0].childNodes[5].textContent as string;
           if (StatusStr == "") {
+            this.hideSpinner();
             this.presentAlert("The logged in user doesn't have any PO yet !");
             return;
           }
