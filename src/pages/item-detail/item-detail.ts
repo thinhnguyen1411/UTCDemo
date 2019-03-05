@@ -146,7 +146,9 @@ export class ItemDetailPage {
       subTitle: info,
       buttons: ['OK']
     });
-    alert.present();
+    setTimeout(() => {
+      alert.present();
+    }, 1000);
   }
   async doApprove(ponum:string,actionStr:string) {
     this.loading = this.loadingCtrl.create({
@@ -154,17 +156,27 @@ export class ItemDetailPage {
       dismissOnPageChange: true
     });
     this.showSpinner();
-    let sapData = `<soapenv:Envelope xmlns:soapenv="http://www.w3.org/2003/05/soap-envelope" xmlns:urn="urn:sap-com:document:sap:soap:functions:mc-style"> <soapenv:Header/> <soapenv:Body> <urn:ZmobilePoReject> <Apprej>${actionStr}</Apprej> <Ponumber>${ponum}</Ponumber> <Return> <item> <Type></Type> <Code></Code> <Message></Message> <LogNo></LogNo> <LogMsgNo></LogMsgNo> <MessageV1></MessageV1> <MessageV2></MessageV2> <MessageV3></MessageV3> <MessageV4></MessageV4> </item> </Return> </urn:ZmobilePoReject> </soapenv:Body></soapenv:Envelope>`;
-    if(this.global.isDebug)
-      this.presentAlert("Request Data: " + sapData);
+    let sapData = `<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:sap-com:document:sap:soap:functions:mc-style"><soapenv:Header/><soapenv:Body><urn:ZmobilePoRelease><Apprej>${actionStr}</Apprej><Ponumber>${ponum}</Ponumber><Return><item><Type></Type><Code></Code><Message></Message><LogNo></LogNo><LogMsgNo></LogMsgNo><MessageV1></MessageV1><MessageV2></MessageV2><MessageV3></MessageV3><MessageV4></MessageV4></item></Return></urn:ZmobilePoRelease></soapenv:Body></soapenv:Envelope>`;
+    //if(this.global.isDebug)
+    {
+      setTimeout(() => {
+        alert("Request Data: " + sapData);
+      }, 1000);
+      
+    }
     var returnData = await this.api2.makePostSoapRequest('poapproval/1.0/', sapData);
     let retDataStr= returnData as string;
-    if(this.global.isDebug)
-      this.presentAlert("Response Data: " + retDataStr);
+   // if(this.global.isDebug)
+    {
+      setTimeout(() => {
+        alert("Response Data: " + retDataStr);
+      }, 1000);
+    }
+      
+    this.hideSpinner();
     if(retDataStr=="")
     {
      this.presentAlert("Request error !");
-     this.hideSpinner();
     }
     else
     {
@@ -181,24 +193,27 @@ export class ItemDetailPage {
           if(actionStr == "1")
           {
             this.isApproved = true;
-           this.presentAlert("Approve succeed !");
+            this.presentAlert("Approve succeed !");
           }
-          else if(actionStr == "2")
-           this.presentAlert("Reject succeed !");
           else
            this.presentAlert("Invalid approval action !");
         }
         else
         {
-          // var msgObj = doc.getElementsByTagName("item")[0].getElementsByTagName("Message")[0].textContent as string;
+          var msgObj = doc.getElementsByTagName("item")[0].getElementsByTagName("Message")[0].textContent as string;
           if(actionStr == "2")
-           this.presentAlert("Reject succeed !");
+          {
+            if(msgObj == "")
+              this.presentAlert("Reject succeed !");
+            else
+              this.presentAlert(`PO ${this.selectedPO.Ebeln} already rejected`);
+          }
           else
-            this.presentAlert(`PO ${this.selectedPO.Ebeln} Already Approved`);
+            this.presentAlert(`PO ${this.selectedPO.Ebeln} already approved`);
           
         }
       } 
     }
-    this.hideSpinner();
+    //this.hideSpinner();
   }
 }

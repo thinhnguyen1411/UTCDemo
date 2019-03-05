@@ -40,17 +40,21 @@ export class ListMasterPage {
       this.presentAlert("Login User: " + this.global.loginUser);
       this.presentAlert("Request Data: " + sapData);
     }
+    this.showSpinner();
     var returnData = await this.api2.makePostSoapRequest('poheader/1.0/', sapData);
     let retDataStr = returnData as string;
     if(this.global.isDebug)
-      this.presentAlert("Response Data: " + retDataStr);
-    if (retDataStr == "") {
-      this.presentAlert("Request error !");
+    {
       this.hideSpinner();
+      this.presentAlert("Response Data: " + retDataStr);
+    }
+    if (retDataStr == "") {
+      this.hideSpinner();
+      this.presentAlert("Request error !");
       return;
     }
     else {
-      this.showSpinner();
+     
       let parser = new DOMParser();
       let doc = parser.parseFromString(retDataStr, "application/xml");
       // var rsObj=doc.getElementsByTagName("env:Envelope")[0].getElementsByTagName("env:Body")[0] as HTMLElement;
@@ -61,7 +65,10 @@ export class ListMasterPage {
           var StatusStr = listPOs[0].childNodes[5].textContent as string;
           if (StatusStr == "") {
             this.hideSpinner();
-            this.presentAlert("The logged in user doesn't have any PO yet !");
+           
+              this.presentAlert("The logged in user doesn't have any PO yet !");
+            
+            
             return;
           }
         }
@@ -128,7 +135,10 @@ export class ListMasterPage {
       subTitle: info,
       buttons: ['OK']
     });
-    alert.present();
+    setTimeout(() => {
+      alert.present();
+    }, 1000);
+    
   }
   /**
    * The view loaded, let's query our items for the list

@@ -116,7 +116,6 @@ export class LoginPage {
       if(typeEle == null || typeEle.toUpperCase() == "E")
       {
        this.presentAlert("User or password is incorrect !");
-        this.hideSpinner();
       }
       else
       {
@@ -150,6 +149,8 @@ export class LoginPage {
       subTitle: info,
       buttons: ['OK']
     });
-    alert.present();
+    setTimeout(() => {
+      alert.present();
+    }, 1000);
   }
 }
