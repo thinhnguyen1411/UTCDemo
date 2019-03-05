@@ -12,6 +12,7 @@ import * as _ from 'lodash';
 export class GlobalProvider {
   public loginUser: string;
   public isDebug: boolean = false;
+  public buildNum:string = "0.0.3";
   constructor(public http: HttpClient) {
     console.log('Hello GlobalProvider Provider');
   }
