@@ -43,5 +43,5 @@ app.route('/poapproval/1.0/').post((req, res) => {
   res.contentType('application/xml');
   // res.sendFile(path.join(__dirname, 'src/assets/dummy/poapproval-0.xml')); // already approved before
   // res.sendFile(path.join(__dirname, 'src/assets/dummy/poapproval-1.xml')); // not approved yet before
-  res.sendFile(path.join(__dirname, 'src/assets/dummy/poapproval-2.xml')); // rejected
+  res.sendFile(path.join(__dirname, 'src/assets/dummy/reject1.xml')); // rejected
 })

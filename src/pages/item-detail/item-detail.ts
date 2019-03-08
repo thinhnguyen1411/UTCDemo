@@ -200,13 +200,14 @@ export class ItemDetailPage {
         }
         else
         {
-          var msgObj = doc.getElementsByTagName("item")[0].getElementsByTagName("Message")[0].textContent as string;
+          
           if(actionStr == "2")
           {
-            if(msgObj == "")
-              this.presentAlert("Reject succeed !");
-            else
-              this.presentAlert(`PO ${this.selectedPO.Ebeln} already rejected`);
+            if(doc.getElementsByTagName("item")[1] != null)
+            {
+              var msgObj = doc.getElementsByTagName("item")[1].getElementsByTagName("Message")[0].textContent as string;
+              this.presentAlert(msgObj);
+            }
           }
           else
             this.presentAlert(`PO ${this.selectedPO.Ebeln} already approved`);
