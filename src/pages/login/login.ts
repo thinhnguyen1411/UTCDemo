@@ -12,6 +12,7 @@ import { ThrowStmt } from '@angular/compiler';
 import xml2js from 'xml2js';
 import { GlobalProvider } from "../../providers/global/global";
 import { LoadingController } from 'ionic-angular';
+import { App } from 'ionic-angular';
 @IonicPage()
 @Component({
   selector: 'page-login',
@@ -39,7 +40,7 @@ export class LoginPage {
     public translateService: TranslateService,
     public api: Api,
     public loadingCtrl: LoadingController,
-    public api2: HttpServiceProvider,public global: GlobalProvider,
+    public api2: HttpServiceProvider,public global: GlobalProvider,public appCtrl: App,
     public alertController: AlertController) {
     this.navCtrler = navCtrl;
     this.translateService.get('LOGIN_ERROR').subscribe((value) => {
@@ -120,7 +121,8 @@ export class LoginPage {
       else
       {
         this.global.loginUser = this.account.email;
-        this.navCtrl.push(MainPage);
+        //this.navCtrl.push(MainPage);
+        this.appCtrl.getRootNav().setRoot(MainPage);
       }
     }
   }
