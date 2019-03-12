@@ -12,9 +12,15 @@ import * as _ from 'lodash';
 export class GlobalProvider {
   public loginUser: string;
   public isDebug: boolean = false;
-  public buildNum:string = "0.0.6";
+  public buildNum:string = "";
   constructor(public http: HttpClient) {
     console.log('Hello GlobalProvider Provider');
+    this.http.get("../../assets/config/config.xml", { responseType: 'text' }).subscribe(data => {
+			let parser = new DOMParser();
+			let doc = parser.parseFromString(data, "application/xml");
+			  var AppVersion = doc.getElementsByTagName("AppVersion")[0].textContent as string;
+				this.buildNum = AppVersion;
+		})
   }
 
   getPaginatedItems(items, page, pageSize) {
