@@ -17,7 +17,7 @@ import xml2js from 'xml2js';
   and Angular DI.
 */
 
-let testBaseURL = "http://localhost:3000/";
+let testBaseURL = "";
 // let testBaseURL = "https://CHKKLK02.AP.CARRIER.UTC.COM:8243/" ;
 // let soapAction = "http://podemosap.azurewebsites.net/saplogon.asmx/";
 @Injectable()
@@ -40,6 +40,15 @@ export class HttpServiceProvider {
 			content: 'Please wait...',
 			dismissOnPageChange: true
 		});
+		// this.http.get('../../assets/dummy/login-failed.xml').subscribe(data => {
+		// 	console.log(data.toString());
+		// });
+		this.http.get("../../assets/config/config.xml", { responseType: 'text' }).subscribe(data => {
+			let parser = new DOMParser();
+			let doc = parser.parseFromString(data, "application/xml");
+			  var serviceURL = doc.getElementsByTagName("ServiceURL")[0].textContent as string;
+				testBaseURL = serviceURL;
+		})
 	}
 
 	public makeGetSoapRequest(url, param) {
