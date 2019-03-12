@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Item } from '../../models/item';
 import * as _ from 'lodash';
+import { AppVersion } from '@ionic-native/app-version/ngx';
 /*
   Generated class for the GlobalProvider provider.
 
@@ -13,8 +14,14 @@ export class GlobalProvider {
   public loginUser: string;
   public isDebug: boolean = false;
   public buildNum:string = "0.0.6";
-  constructor(public http: HttpClient) {
+  constructor(public http: HttpClient,public appVersion: AppVersion) {
     console.log('Hello GlobalProvider Provider');
+    //this.getVersionNumber();
+  }
+
+  async getVersionNumber() {
+    const versionNumber = await this.appVersion.getVersionNumber();
+    console.log(versionNumber);
   }
 
   getPaginatedItems(items, page, pageSize) {

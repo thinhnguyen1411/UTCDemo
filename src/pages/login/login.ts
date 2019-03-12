@@ -13,6 +13,7 @@ import xml2js from 'xml2js';
 import { GlobalProvider } from "../../providers/global/global";
 import { LoadingController } from 'ionic-angular';
 import { App } from 'ionic-angular';
+import { AppVersion } from '@ionic-native/app-version/ngx';
 @IonicPage()
 @Component({
   selector: 'page-login',
@@ -23,6 +24,7 @@ export class LoginPage {
   // If you're using the username field with or without email, make
   // sure to add it to the type
   loading;
+  VersionNumber:string;
   account: { email: string, password: string } = {
     email: 'GUNDAA',
     password: '2025!'
@@ -39,7 +41,7 @@ export class LoginPage {
     public toastCtrl: ToastController,
     public translateService: TranslateService,
     public api: Api,
-    public loadingCtrl: LoadingController,
+    public loadingCtrl: LoadingController,private appVersion: AppVersion,
     public api2: HttpServiceProvider,public global: GlobalProvider,public appCtrl: App,
     public alertController: AlertController) {
     this.navCtrler = navCtrl;
@@ -50,8 +52,22 @@ export class LoginPage {
       content: 'Please wait...',
       dismissOnPageChange: false
     });
+    
+    var b = this.getVersion().then(data => {
+     
+      console.log('inside:' + data);
+    });
+    
   }
-
+  getVersion() {
+    return new Promise(async (resolve, reject) => {
+      await this.appVersion.getAppName().then(value => {
+        resolve(value);
+      }).catch(err => {
+        resolve(err);
+      });
+    });
+  }
   // Attempt to login in through our User service
   async doLogin() {
     // this.user.login(this.account).subscribe((resp) => {
