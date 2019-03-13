@@ -13,7 +13,6 @@ import xml2js from 'xml2js';
 import { GlobalProvider } from "../../providers/global/global";
 import { LoadingController } from 'ionic-angular';
 import { App } from 'ionic-angular';
-import { AppVersion } from '@ionic-native/app-version/ngx';
 @IonicPage()
 @Component({
   selector: 'page-login',
@@ -41,7 +40,7 @@ export class LoginPage {
     public toastCtrl: ToastController,
     public translateService: TranslateService,
     public api: Api,
-    public loadingCtrl: LoadingController,private appVersion: AppVersion,
+    public loadingCtrl: LoadingController,
     public api2: HttpServiceProvider,public global: GlobalProvider,public appCtrl: App,
     public alertController: AlertController) {
     this.navCtrler = navCtrl;
@@ -53,21 +52,25 @@ export class LoginPage {
       dismissOnPageChange: false
     });
     
-    var b = this.getVersion().then(data => {
-     
-      console.log('inside:' + data);
-    });
+    // var b = this.getVersion().then(data => {
+    //  alert(data);
+    //   console.log('inside:' + data);
+    // });
+    // this.appVersion.getVersionNumber().then(version => {
+    //   // this.versionNumber = version;
+    //   alert(version);
+    //   });
     
   }
-  getVersion() {
-    return new Promise(async (resolve, reject) => {
-      await this.appVersion.getAppName().then(value => {
-        resolve(value);
-      }).catch(err => {
-        resolve(err);
-      });
-    });
-  }
+  // getVersion() {
+  //   return new Promise(async (resolve, reject) => {
+  //     await this.appVersion.getAppName().then(value => {
+  //       resolve(value);
+  //     }).catch(err => {
+  //       resolve(err);
+  //     });
+  //   });
+  // }
   // Attempt to login in through our User service
   async doLogin() {
     // this.user.login(this.account).subscribe((resp) => {

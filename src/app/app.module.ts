@@ -16,7 +16,7 @@ import { MyApp } from './app.component';
 import { Network } from '@ionic-native/network/ngx';
 import { HttpServiceProvider } from '../providers/api/soap-service';
 import { GlobalProvider } from '../providers/global/global';
-import { AppVersion } from '@ionic-native/app-version/ngx';
+import { AppVersion } from '@ionic-native/app-version';
 // The translate loader needs to know where to load i18n files
 // in Ionic's static asset pipeline.
 export function createTranslateLoader(http: HttpClient) {
