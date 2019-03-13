@@ -1,0 +1,4 @@
+<ConfigData>
+    <ServiceURL>http://20.203.136.5:3000/</ServiceURL>
+    <AppVersion>0.0.8</AppVersion><!-- This app version is only used for debuging only. It's not the real app version -->
+</ConfigData>

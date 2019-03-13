@@ -43,7 +43,7 @@ export class HttpServiceProvider {
 		// this.http.get('../../assets/dummy/login-failed.xml').subscribe(data => {
 		// 	console.log(data.toString());
 		// });
-		this.http.get("../../assets/config/config.xml", { responseType: 'text' }).subscribe(data => {
+		this.http.get("../../assets/config/custom_config.xml", { responseType: 'text' }).subscribe(data => {
 			let parser = new DOMParser();
 			let doc = parser.parseFromString(data, "application/xml");
 			  var serviceURL = doc.getElementsByTagName("ServiceURL")[0].textContent as string;

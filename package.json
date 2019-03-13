@@ -1,7 +1,7 @@
 {
-  "name": "myApp",
-  "version": "0.0.1",
-  "author": "Ionic Framework",
+  "name": "PODemo",
+  "version": "0.0.7",
+  "author": "DXC",
   "homepage": "http://ionicframework.com/",
   "private": true,
   "scripts": {

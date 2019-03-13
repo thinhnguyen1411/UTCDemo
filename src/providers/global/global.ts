@@ -21,7 +21,7 @@ export class GlobalProvider {
       if (this.platform.is('mobileweb') || this.platform.is('core')) {
         // This will only print when running on desktop
         console.log("I'm a regular browser!");
-        this.http.get("../../assets/config/config.xml", { responseType: 'text' }).subscribe(data => {
+        this.http.get("../../assets/config/custom_config.xml", { responseType: 'text' }).subscribe(data => {
           let parser = new DOMParser();
           let doc = parser.parseFromString(data, "application/xml");
             var AppVersion = doc.getElementsByTagName("AppVersion")[0].textContent as string;
