@@ -23,6 +23,7 @@ export class LoginPage {
   // If you're using the username field with or without email, make
   // sure to add it to the type
   loading;
+  VersionNumber:string;
   account: { email: string, password: string } = {
     email: 'GUNDAA',
     password: '2025!'
@@ -50,8 +51,26 @@ export class LoginPage {
       content: 'Please wait...',
       dismissOnPageChange: false
     });
+    
+    // var b = this.getVersion().then(data => {
+    //  alert(data);
+    //   console.log('inside:' + data);
+    // });
+    // this.appVersion.getVersionNumber().then(version => {
+    //   // this.versionNumber = version;
+    //   alert(version);
+    //   });
+    
   }
-
+  // getVersion() {
+  //   return new Promise(async (resolve, reject) => {
+  //     await this.appVersion.getAppName().then(value => {
+  //       resolve(value);
+  //     }).catch(err => {
+  //       resolve(err);
+  //     });
+  //   });
+  // }
   // Attempt to login in through our User service
   async doLogin() {
     // this.user.login(this.account).subscribe((resp) => {
