@@ -101,6 +101,13 @@ export class LoginPage {
     //           headers: headers
     //         };
 
+
+    if(this.account.email.trim()=="" || this.account.password.trim() == "")
+    {
+      this.presentAlert("Username/Password cannot be blank !");
+      return;
+    }
+
     this.showSpinner();
     // let xmlData = '<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:quer="http://ws.cdyne.com/PhoneVerify/query"><soapenv:Header/><soapenv:Body><quer:CheckPhoneNumber><!--Optional:--><quer:PhoneNumber>18006785432</quer:PhoneNumber><!--Optional:--><quer:LicenseKey>0</quer:LicenseKey></quer:CheckPhoneNumber></soapenv:Body></soapenv:Envelope>';
     let sapData = `<soapenv:Envelope xmlns:soapenv="http://www.w3.org/2003/05/soap-envelope" xmlns:urn="urn:sap-com:document:sap:soap:functions:mc-style"> <soapenv:Header/> <soapenv:Body> <urn:ZsusrCheckLogonData> <Aliasname> </Aliasname> <AuthData></AuthData> <AuthMethod>P</AuthMethod> <ExtidType></ExtidType> <Language>EN</Language> <Password>${this.account.password}</Password> <UseNewException></UseNewException> <Userid>${this.account.email}</Userid> </urn:ZsusrCheckLogonData> </soapenv:Body></soapenv:Envelope>`;
