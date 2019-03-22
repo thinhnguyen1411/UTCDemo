@@ -157,7 +157,7 @@ export class ItemDetailPage {
     });
     this.showSpinner();
     let sapData = `<soapenv:Envelope xmlns:soapenv="http://www.w3.org/2003/05/soap-envelope" xmlns:urn="urn:sap-com:document:sap:soap:functions:mc-style"><soapenv:Header/><soapenv:Body><urn:ZmobilePoRelease><Apprej>${actionStr}</Apprej><Ponumber>${ponum}</Ponumber><Return><item><Type></Type><Code></Code><Message></Message><LogNo></LogNo><LogMsgNo></LogMsgNo><MessageV1></MessageV1><MessageV2></MessageV2><MessageV3></MessageV3><MessageV4></MessageV4></item></Return></urn:ZmobilePoRelease></soapenv:Body></soapenv:Envelope>`;
-    //if(this.global.isDebug)
+    if(this.global.isDebug)
     {
       setTimeout(() => {
         alert("App Ver: "+this.global.buildNum +" Request Data: " + sapData);
@@ -166,7 +166,7 @@ export class ItemDetailPage {
     }
     var returnData = await this.api2.makePostSoapRequest('poapproval/1.0/', sapData);
     let retDataStr= returnData as string;
-   // if(this.global.isDebug)
+    if(this.global.isDebug)
     {
       setTimeout(() => {
         alert("App Ver: "+this.global.buildNum +" Response Data: " + retDataStr);
