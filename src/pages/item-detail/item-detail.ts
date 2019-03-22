@@ -208,6 +208,11 @@ export class ItemDetailPage {
               var msgObj = doc.getElementsByTagName("item")[1].getElementsByTagName("Message")[0].textContent as string;
               this.presentAlert(msgObj);
             }
+            else if(doc.getElementsByTagName("item")[0] != null)
+            {
+              var msgObj = doc.getElementsByTagName("item")[0].getElementsByTagName("Message")[0].textContent as string;
+              this.presentAlert(msgObj);
+            }
           }
           else
             this.presentAlert(`PO ${this.selectedPO.Ebeln} already approved`);
