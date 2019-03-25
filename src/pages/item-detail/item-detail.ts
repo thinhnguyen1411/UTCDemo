@@ -173,10 +173,11 @@ export class ItemDetailPage {
       }, 1000);
     }
       
-    this.hideSpinner();
+    
     if(retDataStr=="")
     {
      this.presentAlert("Request error !");
+     this.hideSpinner();
     }
     else
     {
@@ -185,6 +186,7 @@ export class ItemDetailPage {
       // var rsObj=doc.getElementsByTagName("env:Envelope")[0].getElementsByTagName("env:Body")[0] as HTMLElement;
       var statusObj = doc.getElementsByTagName("Status")[0] as HTMLElement;
       // alert(statusObj);
+      this.hideSpinner();
       if(statusObj != null)
       {
         var statusTxt= statusObj.textContent as string;
