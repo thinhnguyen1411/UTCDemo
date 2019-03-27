@@ -184,14 +184,16 @@ export class ListMasterPage {
    */
 
   onChange(value) {
-    if (value == "All")
-      this.currentItems = this.allItems;
-    else if (value == "rejected")
-      this.currentItems = this.allItems.filter(item => item.Status == "R");
-    else if (value == "approved")
-      this.currentItems = this.allItems.filter(item => item.Status == "A");
-    else if (value == "pending")
-      this.currentItems = this.allItems.filter(item => item.Status == "P");
+    // if (value == "All")
+    //   this.currentItems = this.allItems;
+    // else if (value == "rejected")
+    //   this.currentItems = this.allItems.filter(item => item.Ebeln == value);
+    // else if (value == "approved")
+    //   this.currentItems = this.allItems.filter(item => item.Status == "A");
+    // else if (value == "pending")
+    //   this.currentItems = this.allItems.filter(item => item.Status == "P");
+
+    this.currentItems = this.allItems.filter(item => item.Ebeln.includes(value.value));
   }
 
   openItem(item: Item) {

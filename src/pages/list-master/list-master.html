@@ -8,6 +8,14 @@
       {{ 'LIST_MASTER_TITLE' | translate }}
     </ion-title>
   </ion-navbar>
+  <ion-toolbar clear>
+    <ion-searchbar animated (ionChange)="onChange($event)"></ion-searchbar>
+    <ion-buttons end>
+			<button ion-button clear>
+				Filter
+			</button>
+		</ion-buttons>
+  </ion-toolbar>
 </ion-header>
 <ion-content padding class="animated fadeIn common-bg">
   <!-- <ion-select multiple="false" #MySelect (ionChange)="onChange($event)">
@@ -16,6 +24,8 @@
         <ion-option value="rejected">Rejected</ion-option>
         <ion-option value="approved">Approved</ion-option>
     </ion-select> -->
+
+    <!-- <ion-searchbar animated style="width:80%"></ion-searchbar><button ion-button clear>Filter</button> -->
   <ion-list class="po-list-md">
     <ion-item-sliding *ngFor="let item of currentItems">
       <button ion-item (click)="openItem(item)">
