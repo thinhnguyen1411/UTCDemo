@@ -7,6 +7,7 @@ import { AlertController } from 'ionic-angular';
 import { GlobalProvider } from "../../providers/global/global";
 import { LoadingController } from 'ionic-angular';
 import * as _ from 'lodash';
+import { LoginPage } from '../login/login';
 @IonicPage()
 @Component({
   selector: 'page-list-master',
@@ -23,6 +24,12 @@ export class ListMasterPage {
   constructor(public navCtrl: NavController, public items: Items, public loadingCtrl: LoadingController, public modalCtrl: ModalController, public api2: HttpServiceProvider, public alertController: AlertController, public global: GlobalProvider) {
     //this.currentItems = this.items.query();
   }
+
+  presentProfileModal() {
+    let profileModal = this.modalCtrl.create(LoginPage);
+    profileModal.present();
+  }
+
   ionViewWillEnter() {
     this.currentItems = [];
     this.page = 1;
@@ -32,6 +39,10 @@ export class ListMasterPage {
       dismissOnPageChange: false
     });
     this.loadPOListData();
+  }
+
+  doFilter() {
+    this.presentProfileModal();
   }
   async loadPOListData() {
     let sapData = `<soapenv:Envelope xmlns:soapenv="http://www.w3.org/2003/05/soap-envelope" xmlns:urn="urn:sap-com:document:sap:soap:functions:mc-style"> <soapenv:Header/> <soapenv:Body> <urn:ZmobilePoHeader> <PurchaseHeader> <item> <Sno></Sno> <Ebeln></Ebeln> <Aedat></Aedat> <Utime></Utime> <Netwr></Netwr> <Status></Status> </item> </PurchaseHeader> <Username>${this.global.loginUser}</Username> </urn:ZmobilePoHeader> </soapenv:Body></soapenv:Envelope>`;

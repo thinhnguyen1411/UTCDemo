@@ -11,7 +11,7 @@
   <ion-toolbar clear>
     <ion-searchbar animated (ionChange)="onChange($event)"></ion-searchbar>
     <ion-buttons end>
-			<button ion-button clear>
+			<button ion-button clear tappable (click)="doFilter()">
 				Filter
 			</button>
 		</ion-buttons>
